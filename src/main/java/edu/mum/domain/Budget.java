@@ -6,7 +6,6 @@
 package edu.mum.domain;
 
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.joda.money.Money;
+import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -31,13 +35,15 @@ public class Budget {
 
     
     @NotNull
-   
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "year", nullable = false)
-    private Date year;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate year;
     
     
-    @Column(name = "grossAmount", nullable = false)
-    private double grossAmount; // could be used for localization of our system in to different currencies with indepencence of buisness logic
+    @Columns(columns = {@Column(name = "currency"), @Column(name = "grossAmount")})
+    @Type(type = "org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyAmountAndCurrency")
+    private Money grossAmount; // could be used for localization of our system in to different currencies with indepencence of buisness logic
 
    
     @ManyToOne(fetch = FetchType.EAGER)
@@ -53,19 +59,19 @@ public class Budget {
         this.id = id;
     }
 
-    public Date getYear() {
-        return  new java.sql.Date(year.getTime());
+    public LocalDate getYear() {
+        return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(LocalDate year) {
         this.year = year;
     }
 
-    public double getGrossAmount() {
+    public Money getGrossAmount() {
         return grossAmount;
     }
 
-    public void setGrossAmount(double grossAmount) {
+    public void setGrossAmount(Money grossAmount) {
         this.grossAmount = grossAmount;
     }
 

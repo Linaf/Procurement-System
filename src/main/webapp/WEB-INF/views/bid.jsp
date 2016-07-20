@@ -1,12 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<script src="/OSProc/resources/Angular/bidController.js"></script>
-<div ng-app="bidModule">
-    <div ng-controller="bidCtrl">
-<div class="row" >
+ <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="dashboard_graph">
 
@@ -19,30 +11,28 @@
 
               <div class="col-md-9 col-sm-9 col-xs-12">
                 
-    <div id="alert-area"></div>
-                  <div class="form-horizontal form-label-left"  >
+ 
+                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="request-title">Request Title <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input ng-model="id" id="id"  disabled="disabled"  type="text"  class="form-control col-md-7 col-xs-12"/>
-                         
+                        <input type="text" disabled="disabled" id="request-title" name="requestTitle" required="required" class="form-control col-md-7 col-xs-12"><em>(Choose Request)</em>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="approvedDate">Date Posted  <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="closing-date">Closing Date  <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input ng-model="approvedDate" id="approvedDate"  disabled="disabled"  type="text"  class="form-control col-md-7 col-xs-12"/>
+                        <input type="text" id="closing-date"  disabled="disabled"  name="closingDate" required="required" class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
-                      
                     <div class="form-group">
-                      <label for="status" class="control-label col-md-3 col-sm-3 col-xs-12">Status<span class="required">*</span>
+                      <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Bid Amount <span class="required">*</span>
                       </label> 
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input ng-model="status" id="status"  disabled="disabled"  type="text"  class="form-control col-md-7 col-xs-12"/>
+                        <input id="bid-amount" class="form-control col-md-7 col-xs-12" type="text" name="bidAmount"> <em>(Amount in $) </em>
                       </div>
                     </div>
                     
@@ -50,28 +40,15 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Submitted <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="date" ng-model="date" value=""  disabled="disabled"  class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                      </div>
-                    </div>
-                      
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Submitted By <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="supplierName" ng-model="supplierName" value="Dummy Value"  disabled="disabled"  class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                        <input id="dateSubmitted" value=""  disabled="disabled"  class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                       </div>
                     </div>
                     
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Amount<span class="required">* </span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input id="amount" ng-model="amount" value=""  class="date-picker form-control col-md-7 col-xs-12" required="required" type="text"> <em>(in USD)</em>
-                      </div>
+                  
                     </div>
-                    
 
-                  </div>
+                  </form>
               
             
           
@@ -97,7 +74,7 @@
                     <br>
                     <button type="button" class="btn btn-info btn-lg" style="width:250px"><i class="success fa fa-search pull-left"></i> Search Bid/Request</button>
                     <br>
-                    <button type="button" class="btn btn-success btn-lg" ng-click="addSupplierBid()" style="width:250px"><i class="success fa fa-save pull-left"></i> Apply To Bid</button>
+                    <button type="button" class="btn btn-success btn-lg" style="width:250px"><i class="success fa fa-save pull-left"></i> Apply To Bid</button>
                    
                     <br>
                   </div>
@@ -118,7 +95,7 @@
         </div>
         <br />
 
-        <div class="row" >
+        <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="dashboard_graph">
 
@@ -163,26 +140,92 @@
                   <table class="table table-striped responsive-utilities jambo_table bulk_action">
                     <thead>
                       <tr class="headings">
+                        <th>
+                          <input type="checkbox" id="check-all" class="flat">
+                        </th>
                         <th class="column-title">Request No </th>
                         <th class="column-title">Date Posted</th>
+                        <th class="column-title">Closing Date</th>
+                        <th class="column-title">Requesting Org Unit </th>
                         <th class="column-title">Status </th>
+                        <th class="column-title">Estimated Amount </th>
                         <th class="column-title no-link last"><span class="nobr">Detail</span>
                         </th>
-                        
+                        <th class="bulk-actions" colspan="7">
+                          <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                        </th>
                       </tr>
                     </thead>
 
-                                    
                     <tbody>
-                      <tr ng-repeat="request in requests" ng-click="setForm(request)">
-                      
-                        <td class=" ">{{request.id}}</td>
-                        <td class=" ">{{request.approvedDate}} </td>
+                      <tr class="even pointer">
+                        <td class="a-center ">
+                          <input type="checkbox" class="flat" name="table_records">
+                        </td>
+                        <td class=" ">121000040</td>
+                        <td class=" ">May 23, 2014 11:47:56 PM </td>
+                        <td class=" ">May 23, 2014 11:47:56 PM </td>
+                        <td class=" ">Information System</td>
                         <td class=" "> <span class="label label-success col-sm-9">Open</span></td>
+                        <td class="a-right a-right ">$7.45</td>
                         <td class=" last"><a href="#">View </a> <i class="success fa fa-plus"></i>
                         </td>
                       </tr>
-                      
+                      <tr class="odd pointer">
+                        <td class="a-center ">
+                          <input type="checkbox" class="flat" name="table_records">
+                        </td>
+                        <td class=" ">121000039</td>
+                        <td class=" ">May 23, 2014 11:30:12 PM</td>
+                        <td class=" ">May 23, 2014 11:47:56 PM  
+                        </td>
+                        <td class=" ">Building and  Mantainance</td>
+                        <td class=" "><span class="label label-warning col-sm-9">Closing Soon</span></td>
+                        <td class="a-right a-right ">$741.20</td>
+                        <td class=" last"><a href="#">View</a> <i class="success fa fa-plus"></i>
+                        </td>
+                      </tr>
+                      <tr class="even pointer">
+                        <td class="a-center ">
+                          <input type="checkbox" class="flat" name="table_records">
+                        </td>
+                        <td class=" ">121000038</td>
+                        <td class=" ">May 24, 2014 10:55:33 PM</td>
+                        <td class=" ">May 23, 2014 11:47:56 PM  </i>
+                        </td>
+                        <td class=" ">Security</td>
+                        <td class=" "><span class="label label-danger col-sm-9" >Closed</span></td>
+                        <td class="a-right a-right ">$432.26</td>
+                        <td class=" last"><a href="#">View</a> <i class="success fa fa-plus"></i>
+                        </td>
+                      </tr>
+                      <tr class="odd pointer">
+                        <td class="a-center ">
+                          <input type="checkbox" class="flat" name="table_records">
+                        </td>
+                        <td class=" ">121000037</td>
+                        <td class=" ">May 24, 2014 10:52:44 PM</td>
+                        <td class=" ">May 23, 2014 11:47:56 PM </td>
+                        <td class=" ">Public Affairs</td>
+                        <td class=" "><span class="label label-info col-sm-9"  >Approved</span></td>
+                        <td class="a-right a-right ">$333.21</td>
+                        <td class=" last"><a href="#">View</a> <i class="success fa fa-plus"></i>
+                        </td>
+                      </tr>
+                      <tr class="even pointer">
+                        <td class="a-center ">
+                          <input type="checkbox" class="flat" name="table_records">
+                        </td>
+                        <td class=" ">121000040</td>
+                        <td class=" ">May 24, 2014 11:47:56 PM </td>
+                        <td class=" ">May 23, 2014 11:47:56 PM </td>
+                        <td class=" ">CEO</td>
+                        <td class=" "><span class="label label-info col-sm-9">Approved</span></td>
+                        <td class="a-right a-right ">$7.45</td>
+                        <td class=" last"><a href="#">View</a> <i class="success fa fa-plus"></i>
+                        </td>
+                      </tr>
+                     
                     </tbody>
 
                   </table>
@@ -197,5 +240,3 @@
 
         </div>
         <br />
-    </div>
-</div>

@@ -49,12 +49,12 @@ public class Request {
    
    
     
-    @Column(name = "approvedDate")
+     @Column(name = "approvedDate")
     private Date approvedDate;
     
     
     
-    @Column(name = "declinedDate")
+      @Column(name = "declinedDate")
     private Date declinedDate;
     
     

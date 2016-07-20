@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -60,8 +62,9 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Address> addresses = new ArrayList<Address>();
 
-    
-   
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "requestId")
+    private Request request;
    
 
     public long getId() {
@@ -120,7 +123,14 @@ public class Supplier {
         this.addresses = addresses;
     }
 
-    
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
     @Override
     public String toString() {
         return "Supplier{" + "id=" + id + ", name=" + name + ", rank=" + rank + ", businessRegNo=" + businessRegNo + ", buisnessType=" + buisnessType + ", supplierBid=" + supplierBid + ", addresses=" + addresses + '}';

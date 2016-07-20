@@ -35,7 +35,7 @@ public class SupplierBid {
     private double amount; 
 
 
-  
+
     @Column(name = "date")
     private Date date;
 

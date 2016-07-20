@@ -7,8 +7,8 @@ package edu.mum.service;
 
 import edu.mum.domain.Request;
 import edu.mum.domain.RequestStatus;
-import java.util.Date;
 import java.util.List;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -19,6 +19,6 @@ public interface RequestService {
 	public void update(Request request);
 	public List<Request> findAll();
  	public Request findOne(Long id);
-        public List<Request> findByDate(Date requestDate); 
-        public List<Request> findByStat(RequestStatus s);
+        public List<Request> SearchByDate(String requestDate); 
+        public List<Request> SearchByStatus(RequestStatus s);
 }

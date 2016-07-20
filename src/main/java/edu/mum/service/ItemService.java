@@ -18,6 +18,6 @@ public interface ItemService {
 	public void update(Item item);
 	public List<Item> findAll();
  	public Item findOne(Long id);
-       
+        public void saveItem(Item item);
     
 }

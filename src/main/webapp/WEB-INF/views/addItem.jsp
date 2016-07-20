@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<script src="/OSProc/resources/Angular/itemController.js"></script>
+<script src="/OSProc/resources/Angular/controllers.js"></script>
 <div ng-app="itemModule">
     <div ng-controller="itemCtrl">
 
@@ -117,7 +117,7 @@
 
                     <div class="row x_title">
                         <div class="col-md-6">
-                            <h3>Requests<small> Open / Closed Bids</small></h3>
+                            <h3>Items<small> view All Items</small></h3>
                         </div>
                         <div class="col-md-6"> 
                             <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">

@@ -30,30 +30,30 @@ import org.springframework.stereotype.Repository;
 public class RequestDAOImpl extends GenericDAOImpl<Request> implements RequestDAO {
 
     public RequestDAOImpl() {
-        super.setDaoType(Request.class);
-
+       super.setDaoType(Request.class);
+	
     }
 
     public List<Request> findByStat(RequestStatus stat) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Request> criteriaQuery = cb.createQuery(Request.class);
-        Root<Request> c = criteriaQuery.from(Request.class);
-        ParameterExpression<RequestStatus> p = cb.parameter(RequestStatus.class);
+         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		  CriteriaQuery<Request> criteriaQuery = cb.createQuery(Request.class);
+		  Root<Request> c = criteriaQuery.from(Request.class);
+		  ParameterExpression<RequestStatus> p = cb.parameter(RequestStatus.class);
         criteriaQuery.select(c).where(cb.equal(c.get("requestStatus"), stat)
-        );
-
+                                    );
+		 
         List<Request> requests = entityManager.createQuery(criteriaQuery).getResultList();
-        return requests;
+		  return requests;
     }
-    
+
      public List<Request> findByListStat(List<RequestStatus> stats) {
         //TODO :: Add the method
         return null;
     }
 
-    @Override
+   @Override
     public List<Request> findByDate(Date requestDate) {
-
+    
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Request> criteriaQuery = cb.createQuery(Request.class);
         Root<Request> c = criteriaQuery.from(Request.class);
@@ -61,10 +61,10 @@ public class RequestDAOImpl extends GenericDAOImpl<Request> implements RequestDA
         criteriaQuery.select(c).where(
                 cb.equal(c.get("requestedDate"), requestDate)
         );
-
+    
         List<Request> requests = entityManager.createQuery(criteriaQuery).getResultList();
         return requests;
-
-    }
+    
+}
 
 }

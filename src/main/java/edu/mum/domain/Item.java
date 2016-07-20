@@ -7,7 +7,6 @@ package edu.mum.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -29,10 +29,10 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "Item")
-public class Item implements Serializable{
-     @Id
-    @GeneratedValue
+public class Item {
+    @Id
     @Column(name = "itemId")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
     
@@ -40,7 +40,7 @@ public class Item implements Serializable{
     @Column(name = "serialNo", unique = true, nullable = false)
     private String serialNo;
     
-    @Size(min = 3, max = 100)
+   
     @Column(name = "name", nullable = false)
     private String name;
     
@@ -48,16 +48,14 @@ public class Item implements Serializable{
     @JoinColumn(name = "categoryId")
     private Category category;
     
-   
-   
-
-   @OneToOne(cascade = CascadeType.ALL) 
-   private Specification specification;
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="specId")
+    private Specification specification;
  
-//    @JsonIgnore
-//    @OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
-//    @PrimaryKeyJoinColumn
-//    private RequestItem requestItem;
+    @JsonIgnore
+    @OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
+    @PrimaryKeyJoinColumn
+    private RequestItem requestItem;
     
 
     public Item() {
@@ -103,13 +101,13 @@ public class Item implements Serializable{
         this.specification = specification;
     }
 
-//    public RequestItem getRequestItem() {
-//        return requestItem;
-//    }
-//
-//    public void setRequestItem(RequestItem requestItem) {
-//        this.requestItem = requestItem;
-//    }
+    public RequestItem getRequestItem() {
+        return requestItem;
+    }
+
+    public void setRequestItem(RequestItem requestItem) {
+        this.requestItem = requestItem;
+    }
     
   
     

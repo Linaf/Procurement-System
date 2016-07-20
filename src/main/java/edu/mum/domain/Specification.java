@@ -6,19 +6,15 @@
 package edu.mum.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -26,30 +22,31 @@ import org.hibernate.annotations.Parameter;
  */
 @Entity
 @Table(name = "Specification")
-public class Specification implements Serializable {
+public class Specification {
 
+    
     @Id
-    @GeneratedValue
-    @Column(name = "specId")  
+    @Column(name="specId")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-
+//    @JsonSerialize(using = LocalDateSerializer.class)
+//    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    //@JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonDeserialize(using=LocalDateDeserializer.class)
+    
+   // @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "year")
-    private Date year;
+    private String year;
     
    
     @Column(name = "bestBefore")
-    private Date bestBefore;
+    private String bestBefore;
     
     @Column(name = "price" , precision=19, scale=2)
     private double price; 
     
-//    @JsonIgnore
-//   @OneToOne(mappedBy="specification", cascade = CascadeType.PERSIST) 
-//    private Item item;
-    @OneToOne(optional= false , targetEntity=Item.class, mappedBy = "specification")
-    @PrimaryKeyJoinColumn   
-    private Item item;  
+   
 
     public long getId() {
         return id;
@@ -59,21 +56,19 @@ public class Specification implements Serializable {
         this.id = id;
     }
 
-    public java.sql.Date getYear() {
-        // as LocalDate of Java 8 is hard to serallize we can revert to Date and make it immuitable
-      return new java.sql.Date(year.getTime()); // now we are creating a new Object using Value and returning a new Date Object ,
-                                                   // Now Format is good and immuitable is also preserved!!
-     }
+    public String getYear() {
+        return year;
+    }
 
-    public void setYear(Date year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public Date getBestBefore() {
-        return new java.sql.Date(bestBefore.getTime()); 
+    public String getBestBefore() {
+        return bestBefore;
     }
 
-    public void setBestBefore(Date bestBefore) {
+    public void setBestBefore(String bestBefore) {
         this.bestBefore = bestBefore;
     }
 
@@ -85,20 +80,9 @@ public class Specification implements Serializable {
         this.price = price;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-   
-   
-
     @Override
     public String toString() {
-        return "Specification{" + "id=" + id + ", year=" + year + ", bestBefore=" + bestBefore + ", estimatedPice=" + price  + '}';
+        return "Specification{" + "id=" + id + ", year=" + year + ", bestBefore=" + bestBefore + ", estimatedPice=" + price +  '}';
        
     }
     

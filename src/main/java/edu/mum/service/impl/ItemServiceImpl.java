@@ -24,7 +24,9 @@ public class ItemServiceImpl implements ItemService{
     	
     @Autowired
     private ItemDAO itemDAO;
-    
+    @Autowired
+    private SpecificationDAO specDAO;
+
     public void save( Item item) {  
 	itemDAO.save(item);
     }
@@ -40,5 +42,8 @@ public class ItemServiceImpl implements ItemService{
 		return itemDAO.findOne(id);
     }
     
-  
+    public void saveItem(Item item){
+        item.setSpecification(specDAO.findOne((long)1));
+        itemDAO.save(item);
+    }
 }

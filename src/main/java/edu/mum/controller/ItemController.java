@@ -36,7 +36,9 @@ public class ItemController {
     @Autowired
     ItemService itemService;
    
-    
+    @Autowired
+    SpecificationService specificationService;
+
     /**
      *
      * @param model
@@ -58,7 +60,17 @@ public class ItemController {
     @RequestMapping(value="/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addItem(@RequestBody  Item item) {
-         itemService.save(item);
+        Specification specInital = item.getSpecification();
+        specificationService.save(specInital);
+      long max = 0; 
+      for(Specification specification : specificationService.findAll() ){
+          if(max < specification.getId())
+              max = specification.getId();
+      }
+      
+      specInital.setId(max);
+      item.setSpecification(specInital);
+       itemService.saveItem(item);
        
     } 
      @RequestMapping(value="/get", method = RequestMethod.GET)

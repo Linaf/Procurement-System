@@ -5,9 +5,8 @@
  */
 package edu.mum.domain;
 
-import java.io.Serializable;
+import edu.mum.domain.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,13 +23,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+
 /**
  *
  * @author Yoni
  */
 @Entity
 @Table(name = "Employee")
-public class Employee implements Serializable{
+public class Employee {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -58,8 +61,10 @@ public class Employee implements Serializable{
     private String email;
 
     @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "DOB", nullable = false)
-    private Date DOB;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate DOB;
 
     
     @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -127,11 +132,11 @@ public class Employee implements Serializable{
         this.email = email;
     }
 
-    public Date getDOB() {
-        return new java.sql.Date(DOB.getTime());
+    public LocalDate getDOB() {
+        return DOB;
     }
 
-    public void setDOB(Date DOB) {
+    public void setDOB(LocalDate DOB) {
         this.DOB = DOB;
     }
 

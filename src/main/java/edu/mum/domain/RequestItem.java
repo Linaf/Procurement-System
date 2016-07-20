@@ -5,7 +5,6 @@
  */
 package edu.mum.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,13 +37,12 @@ public class RequestItem {
     @Column(name = "quantity", nullable = false)
     private int quantity;
     
-    @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
     @JoinColumn(name="requestId")
     Request request;
     
-//    @OneToOne(mappedBy="requestItem", cascade = CascadeType.PERSIST)
-//    private Item item;
+    @OneToOne(mappedBy="requestItem", cascade = CascadeType.PERSIST)
+    private Item item;
 
     
     public long getId() {
@@ -71,13 +69,13 @@ public class RequestItem {
         this.request = request;
     }
 
-//    public Item getItem() {
-//        return item;
-//    }
-//
-//    public void setItem(Item item) {
-//        this.item = item;
-//    }
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 
     @Override
     public String toString() {
